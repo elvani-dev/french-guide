@@ -1,0 +1,16 @@
+{
+  "name": "French Study Guide — Niveau 3",
+  "short_name": "French",
+  "description": "Your lessons, distilled: object pronouns and the full past / future / conditional tense system.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#efe9e0",
+  "theme_color": "#5b54e6",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

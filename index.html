@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>French Study Guide — Niveau 3</title>
+<!-- Add-to-Home-Screen / iOS web app -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="French">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#5b54e6">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="apple-touch-icon" sizes="167x167" href="icon-167.png">
+<link rel="apple-touch-icon" sizes="152x152" href="icon-152.png">
+<link rel="apple-touch-icon" sizes="120x120" href="icon-120.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+ :root{
+   --ink:#2a2733;--muted:#736e80;--line:#ece6dd;--hair:#f3eee7;
+   --accent:#5b54e6;--accent-soft:#efeafd;--accent2:#0e7c86;
+   --pc:#2f6df0;--imp:#179a5b;--pqp:#8b46e6;--fut:#df6420;--cond:#d63384;
+   --paper:#efe9e0;--card:#fffdfa;
+   --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+   --serif:'Fraunces','Iowan Old Style',Georgia,serif;
+   --mono:'JetBrains Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+ }
+ *{box-sizing:border-box;}
+ html{scroll-behavior:smooth;}
+ body{font-family:var(--sans);color:var(--ink);line-height:1.62;margin:0;
+   background:var(--paper);-webkit-text-size-adjust:100%;
+   background-image:radial-gradient(at 12% 0%,#f4ecff 0,transparent 42%),radial-gradient(at 92% 4%,#e7faf6 0,transparent 40%);}
+ .page{max-width:840px;margin:30px auto;background:var(--card);padding:0 56px 72px;
+   border-radius:18px;box-shadow:0 1px 2px rgba(40,30,20,.04),0 24px 60px -28px rgba(60,45,90,.28);}
+ #rprog{position:fixed;top:0;left:0;height:3px;width:0;z-index:80;
+   background:linear-gradient(90deg,var(--accent),var(--cond));transition:width .12s ease-out;}
+ /* Hero header */
+ header{margin:0 -56px 30px;padding:46px 56px 30px;border-radius:18px 18px 0 0;
+   background:linear-gradient(135deg,#5b54e6 0%,#7c4fe0 52%,#b0479e 100%);color:#fff;}
+ .kicker{font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+   color:#e7e2ff;margin-bottom:14px;}
+ h1{font-family:var(--serif);font-weight:600;font-size:38px;line-height:1.08;margin:0;color:#fff;letter-spacing:-.01em;}
+ .tagline{color:#efeaff;font-size:16px;margin-top:14px;max-width:34em;line-height:1.5;}
+ .meta{margin-top:18px;font-size:13px;color:#ded7ff;border-top:1px solid rgba(255,255,255,.22);padding-top:14px;}
+ /* On-this-page nav */
+ nav{display:grid;grid-template-columns:1fr 1fr;gap:2px 18px;
+   background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:6px 0 10px;}
+ nav::before{content:"On this page";grid-column:1/-1;font-family:var(--serif);font-weight:600;
+   font-size:15px;color:var(--ink);margin-bottom:10px;}
+ nav a{color:var(--ink);text-decoration:none;display:block;padding:8px 10px;border-radius:8px;
+   font-size:14.5px;transition:background .12s,color .12s,transform .12s;}
+ nav a:hover{background:var(--accent-soft);color:var(--accent);transform:translateX(2px);}
+ /* Pinned floating Contents button + drawer */
+ #tocFab{position:fixed;z-index:50;right:18px;bottom:18px;
+   background:linear-gradient(135deg,var(--accent),#7c4fe0);color:#fff;border:none;
+   border-radius:30px;padding:13px 19px;font-family:var(--sans);font-size:15px;font-weight:600;
+   box-shadow:0 10px 26px -6px rgba(91,84,230,.6);cursor:pointer;display:flex;align-items:center;gap:8px;}
+ #tocFab:active{transform:scale(.97);}
+ #tocOverlay{position:fixed;inset:0;z-index:60;background:rgba(30,22,45,.5);opacity:0;pointer-events:none;
+   transition:opacity .2s;backdrop-filter:blur(3px);}
+ #tocOverlay.open{opacity:1;pointer-events:auto;}
+ #tocDrawer{position:absolute;right:0;top:0;bottom:0;width:min(86vw,360px);background:var(--card);
+   box-shadow:-8px 0 40px rgba(0,0,0,.28);transform:translateX(100%);transition:transform .26s cubic-bezier(.4,0,.2,1);
+   display:flex;flex-direction:column;}
+ #tocOverlay.open #tocDrawer{transform:translateX(0);}
+ #tocDrawer .head{display:flex;justify-content:space-between;align-items:center;padding:20px 22px;border-bottom:1px solid var(--line);}
+ #tocDrawer .head b{font-family:var(--serif);color:var(--accent);font-size:18px;}
+ #tocDrawer .close{background:none;border:none;font-size:28px;line-height:1;color:var(--muted);cursor:pointer;padding:0 4px;}
+ #tocDrawer .links{overflow-y:auto;padding:8px 0;-webkit-overflow-scrolling:touch;}
+ #tocDrawer .links a{display:block;padding:14px 22px;color:var(--ink);text-decoration:none;font-size:16px;border-bottom:1px solid var(--hair);}
+ #tocDrawer .links a:active{background:var(--accent-soft);}
+ /* Section headings */
+ h2{font-family:var(--serif);font-weight:600;font-size:25px;line-height:1.2;letter-spacing:-.01em;
+   margin:46px 0 14px;padding-top:30px;border-top:1px solid var(--line);scroll-margin-top:16px;
+   display:flex;align-items:center;}
+ h2 .num{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:11px;
+   background:linear-gradient(135deg,var(--accent),#7c4fe0);color:#fff;font-family:var(--sans);font-size:16px;font-weight:700;
+   margin-right:14px;flex:none;box-shadow:0 6px 14px -4px rgba(91,84,230,.5);}
+ h3{font-family:var(--serif);font-weight:600;font-size:18px;margin:24px 0 8px;color:var(--accent2);}
+ p{margin:10px 0;}
+ strong,b{font-weight:600;}
+ /* Formula / callout cards */
+ .formula{background:linear-gradient(120deg,#f3f0ff,#ecfbf7);border:1px solid #e0dbf7;
+   border-left:4px solid var(--accent);border-radius:12px;padding:15px 18px;margin:15px 0;font-size:15px;}
+ .formula b{color:var(--accent);}
+ .formula .eq{font-family:var(--mono);font-size:14.5px;font-weight:600;letter-spacing:-.02em;}
+ .tip{background:#fdf7ec;border:1px solid #f3e4c6;border-left:4px solid #e0a32e;border-radius:12px;
+   padding:13px 16px;margin:15px 0;font-size:14.5px;}
+ .tip b{color:#b07414;}
+ .ex{background:#faf8f4;border:1px solid var(--hair);border-radius:10px;padding:9px 14px;margin:9px 0;font-size:14.5px;}
+ .ex .fr{color:var(--accent);font-weight:600;} .ex .en{color:var(--muted);font-style:italic;}
+ .cap{background:linear-gradient(120deg,#fdeef6,#f6eeff);border:1px solid #f0d4e8;border-left:4px solid var(--cond);}
+ /* Tables */
+ table{border-collapse:separate;border-spacing:0;width:100%;margin:16px 0;font-size:14px;
+   border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+ th,td{padding:10px 13px;text-align:left;vertical-align:top;border-bottom:1px solid var(--hair);}
+ th{background:#f6f2ec;font-weight:600;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);}
+ tbody tr:last-child td{border-bottom:none;}
+ tbody tr:nth-child(even) td{background:#faf8f4;}
+ .fr{color:var(--ink);font-weight:600;} .en{color:var(--muted);}
+ .pill{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+   padding:3px 10px;border-radius:20px;color:#fff;margin-left:8px;vertical-align:middle;}
+ ul{margin:10px 0;padding-left:20px;} li{margin:5px 0;}
+ li::marker{color:var(--accent);}
+ footer{margin-top:50px;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:13px;line-height:1.6;}
+ /* Phone layout */
+ @media (max-width:640px){
+   body{background-image:none;}
+   .page{margin:0;border-radius:0;padding:0 16px 96px;box-shadow:none;max-width:100%;}
+   header{margin:0 -16px 24px;padding:34px 20px 24px;border-radius:0;}
+   h1{font-size:28px;} .tagline{font-size:15px;} .kicker{font-size:11.5px;}
+   nav{grid-template-columns:1fr;padding:16px 16px;}
+   nav a{padding:11px 10px;font-size:15.5px;}
+   h2{font-size:21px;margin:36px 0 12px;padding-top:24px;}
+   h2 .num{width:32px;height:32px;font-size:14px;margin-right:11px;}
+   h3{font-size:16.5px;}
+   table{font-size:13px;} th,td{padding:8px 9px;}
+   .formula,.tip,.ex{font-size:14px;}
+ }
+ #tocFab{display:none;}
+ @media (hover:none),(max-width:980px){ #tocFab{display:flex;} }
+ /* iOS standalone / notch safe areas */
+ header{padding-top:calc(46px + env(safe-area-inset-top,0px));}
+ #tocFab{bottom:calc(18px + env(safe-area-inset-bottom,0px));right:calc(18px + env(safe-area-inset-right,0px));}
+ @media (max-width:640px){ header{padding-top:calc(34px + env(safe-area-inset-top,0px));} }
+ @media print{
+   body{background:#fff;background-image:none;}
+   .page{padding:0;max-width:100%;margin:0;box-shadow:none;border-radius:0;}
+   header{margin:0 0 20px;border-radius:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+   nav{break-inside:avoid;}h2{break-after:avoid;}table,.formula,.tip{break-inside:avoid;}
+   #tocFab,#tocOverlay,#rprog{display:none!important;}
+ }
+</style>
+</head>
+<body>
+<div id="rprog"></div>
+<button id="tocFab" aria-label="Open table of contents">📑 Contents</button>
+<div id="tocOverlay">
+  <div id="tocDrawer">
+    <div class="head"><b>📑 Contents</b><button class="close" aria-label="Close">&times;</button></div>
+    <div class="links" id="tocLinks"></div>
+  </div>
+</div>
+<div class="page">
+<header>
+  <div class="kicker">🇫🇷 Niveau 3 · Living study guide</div>
+  <h1>French, your lessons distilled</h1>
+  <div class="tagline">Object pronouns and the complete past / future / conditional tense system — every rule, formula, and example in one place.</div>
+  <div class="meta">23 lessons · Oct 2025 – Jun 2026 · refreshed automatically after each Friday class</div>
+</header>
+
+<nav>
+  <a href="#big">🗺️ The big picture (read this first)</a>
+  <a href="#pron">1 · Object &amp; tonic pronouns</a>
+  <a href="#yen">2 · The pronouns Y and EN</a>
+  <a href="#pc">3 · Passé composé</a>
+  <a href="#imp">4 · L'imparfait</a>
+  <a href="#pcimp">5 · Passé composé vs imparfait</a>
+  <a href="#pqp">6 · Plus-que-parfait</a>
+  <a href="#fut">7 · Futur simple</a>
+  <a href="#cond">8 · Conditionnel (présent &amp; passé)</a>
+  <a href="#hypo">9 · The si / hypothesis system ⭐</a>
+  <a href="#ref">10 · Quick reference</a>
+</nav>
+
+<h2 id="big"><span class="num">★</span>The big picture</h2>
+<p>Almost everything this year builds one machine: <b>talking about time</b> (past, future, imagined) and <b>replacing nouns with pronouns</b> so you don't repeat yourself. If you understand the five "engine" tenses below, the rest is assembly.</p>
+<table>
+<tr><th>Tense</th><th>Formula in one line</th><th>Means</th></tr>
+<tr><td><b style="color:var(--pc)">Passé composé</b></td><td>avoir/être (present) + past participle</td><td>a finished action: "I did / I have done"</td></tr>
+<tr><td><b style="color:var(--imp)">Imparfait</b></td><td>nous-stem + <i>-ais, -ais, -ait, -ions, -iez, -aient</i></td><td>ongoing / habit / description: "I was doing / used to do"</td></tr>
+<tr><td><b style="color:var(--pqp)">Plus-que-parfait</b></td><td>avoir/être (imparfait) + past participle</td><td>further back: "I <i>had</i> done"</td></tr>
+<tr><td><b style="color:var(--fut)">Futur simple</b></td><td>infinitive + <i>-ai, -as, -a, -ons, -ez, -ont</i></td><td>"I will do"</td></tr>
+<tr><td><b style="color:var(--cond)">Conditionnel</b></td><td>infinitive + imparfait endings</td><td>"I would do"</td></tr>
+</table>
+<div class="tip"><b>Memory hook:</b> the <b>futur</b> and the <b>conditionnel</b> use the <i>same stem</i> (the infinitive). Futur takes <i>avoir</i>-style endings (-ai, -as, -a…); conditionnel takes <i>imparfait</i> endings (-ais, -ait…). Learn one irregular stem (e.g. <i>aur-</i> for avoir) and you get both <i>j'aurai</i> (will have) and <i>j'aurais</i> (would have).</div>
+
+<h2 id="pron"><span class="num">1</span>Object &amp; tonic pronouns</h2>
+<p>Four families. The whole point: avoid repeating the noun.</p>
+<table>
+<tr><th>Type</th><th>Forms</th><th>Replaces</th></tr>
+<tr><td>Direct object (COD)</td><td>me, te, <b>le / la / les</b>, nous, vous</td><td>a noun with no preposition — <i>Je vois <u>Marie</u> → Je <b>la</b> vois</i></td></tr>
+<tr><td>Indirect object (COI)</td><td>me, te, <b>lui / leur</b>, nous, vous</td><td>à + a <b>person</b> — <i>Je parle <u>à Paul</u> → Je <b>lui</b> parle</i></td></tr>
+<tr><td>Tonic / stressed</td><td>moi, toi, lui, elle, nous, vous, eux, elles</td><td>after a preposition, or for emphasis — <i>avec <b>moi</b>, chez <b>eux</b></i></td></tr>
+<tr><td>Reflexive</td><td>me, te, se, nous, vous, se</td><td>action back on the subject — <i>Je <b>me</b> lave</i></td></tr>
+</table>
+<div class="formula"><span class="eq">Pronoun goes <b>before the verb</b></span> (before the auxiliary in passé composé; before the infinitive when there are two verbs).<br>
+<span class="en">Je <b>le</b> vois · Je <b>l'</b>ai vu · Je vais <b>le</b> voir</span></div>
+<h3>Order when you have two pronouns</h3>
+<div class="formula"><b>me / te / se / nous / vous</b> → <b>le / la / les</b> → <b>lui / leur</b> → <b>y</b> → <b>en</b> → verb
+<div class="ex"><span class="fr">Il <b>me le</b> donne.</span> — <span class="en">He gives it to me.</span></div>
+<div class="ex"><span class="fr">Je <b>le lui</b> ai dit.</span> — <span class="en">I said it to him/her.</span></div></div>
+<div class="tip"><b>Watch out:</b> verbs like <i>penser à</i> and <i>s'intéresser à</i> keep a <b>tonic</b> pronoun for people: <i>Je pense <b>à elle</b></i> (not "lui"). In the affirmative imperative, <i>me → moi, te → toi</i>: <i>Donne-<b>moi</b> le livre !</i></div>
+
+<h2 id="yen"><span class="num">2</span>The pronouns Y and EN</h2>
+<div class="formula"><b>Y</b> = replaces <b>à + thing</b> or a <b>place</b>.
+<div class="ex"><span class="fr">Tu penses à ton examen ? — Oui, j'<b>y</b> pense.</span> <span class="en">/ Je vais à Paris → J'<b>y</b> vais.</span></div></div>
+<div class="formula"><b>EN</b> = replaces <b>de + thing</b>, a <b>partitive</b> (du/de la/des), or a <b>quantity</b>.
+<div class="ex"><span class="fr">Tu veux du café ? — Oui, j'<b>en</b> veux.</span> <span class="en">/ J'ai deux frères → J'<b>en</b> ai deux.</span></div></div>
+<div class="tip"><b>People keep tonic pronouns:</b> <i>Je parle <b>de lui</b></i> (not "j'en parle" for a person). <i>à + person → lui/leur</i> or tonic; <i>de + person → de lui/d'elle</i>.</div>
+<h3>Verbs that take à vs de (learn the trigger preposition!)</h3>
+<table>
+<tr><th>+ à → <i>y</i> / lui</th><th>+ de → <i>en</i> / de lui</th></tr>
+<tr><td>penser à, jouer à, s'intéresser à, répondre à, téléphoner à, obéir à</td><td>parler de, avoir besoin de, avoir envie de, rêver de, s'occuper de, se souvenir de</td></tr>
+</table>
+
+<h2 id="pc"><span class="num">3</span>Passé composé <span class="pill" style="background:var(--pc)">finished action</span></h2>
+<div class="formula"><span class="eq"><b>avoir</b> or <b>être</b> (present) + <b>past participle</b></span></div>
+<h3>Past participle endings</h3>
+<table>
+<tr><th>Verb group</th><th>Participle</th><th>Example</th></tr>
+<tr><td>-er verbs</td><td>→ <b>-é</b></td><td>parler → parl<b>é</b></td></tr>
+<tr><td>-ir verbs</td><td>→ <b>-i</b></td><td>finir → fin<b>i</b></td></tr>
+<tr><td>-re verbs</td><td>→ <b>-u</b></td><td>vendre → vend<b>u</b></td></tr>
+<tr><td>common irregulars</td><td colspan="2">avoir→eu · être→été · faire→fait · prendre→pris · lire→lu · voir→vu · vivre→vécu · croire→cru · mettre→mis</td></tr>
+</table>
+<h3>When to use ÊTRE — "La Maison d'Être"</h3>
+<p>A small set of <b>movement / change-of-state</b> verbs use <b>être</b>, plus <b>all reflexive verbs</b>. With être, the participle <b>agrees</b> with the subject (add -e / -s).</p>
+<table>
+<tr><td>aller / venir</td><td>arriver / partir</td><td>entrer / sortir</td></tr>
+<tr><td>monter / descendre</td><td>naître / mourir</td><td>rester / tomber</td></tr>
+<tr><td>passer / retourner</td><td>devenir / revenir</td><td>+ all <b>se</b> verbs</td></tr>
+</table>
+<div class="ex"><span class="fr">Elle est allé<b>e</b>. Ils sont parti<b>s</b>. Je me suis levé<b>(e)</b>.</span> <span class="en">— être → agreement.</span></div>
+<div class="tip"><b>Same verb, two auxiliaries:</b> monter, descendre, sortir, passer use <b>avoir</b> when they have a direct object: <i>Je suis sorti</i> (I went out) but <i>J'ai sorti le chien</i> (I took the dog out).</div>
+<div class="tip"><b>Agreement with avoir:</b> normally none — <i>but</i> if a <b>direct object comes before</b> the verb, the participle agrees with it: <i>Les fleurs que j'ai achetée<b>s</b></i>.</div>
+
+<h2 id="imp"><span class="num">4</span>L'imparfait <span class="pill" style="background:var(--imp)">background / habit</span></h2>
+<div class="formula"><span class="eq">take the <b>nous</b> form (present), drop <b>-ons</b>, add the endings</span><br>
+<b>-ais · -ais · -ait · -ions · -iez · -aient</b><br>
+<span class="en">parler → nous parl<u>ons</u> → je parl<b>ais</b>, tu parl<b>ais</b>, il parl<b>ait</b>, nous parl<b>ions</b>, vous parl<b>iez</b>, ils parl<b>aient</b></span></div>
+<div class="tip"><b>Only irregular stem:</b> <b>être → ét-</b> (j'<b>ét</b>ais). Everything else follows the nous-rule, even <i>faire</i> (nous faisons → je faisais) and <i>avoir</i> (nous avons → j'avais).</div>
+<h3>Use the imparfait for…</h3>
+<ul>
+<li><b>Habits</b> in the past — <i>Quand j'étais petit, je <b>jouais</b> au foot.</i> (used to)</li>
+<li><b>Ongoing / in-progress</b> action — <i>Il <b>pleuvait</b>.</i> (it was raining)</li>
+<li><b>Description / state</b> — time, weather, age, feelings — <i>Il <b>faisait</b> beau, elle <b>avait</b> 20 ans.</i></li>
+<li><b>Setting the scene</b> around an event.</li>
+</ul>
+
+<h2 id="pcimp"><span class="num">5</span>Passé composé vs imparfait <span class="pill" style="background:var(--pc)">event</span><span class="pill" style="background:var(--imp)">background</span></h2>
+<div class="formula"><b style="color:var(--imp)">Imparfait</b> = the <i>scenery</i> (what was going on). &nbsp; <b style="color:var(--pc)">Passé composé</b> = the <i>event</i> that happened (and moved the story forward).</div>
+<div class="ex"><span class="fr">Je <b style="color:var(--imp)">dormais</b> quand le téléphone <b style="color:var(--pc)">a sonné</b>.</span> <span class="en">— I was sleeping (background) when the phone rang (event).</span></div>
+<h3>Verbs that change meaning</h3>
+<table>
+<tr><th>Verb</th><th>Imparfait</th><th>Passé composé</th></tr>
+<tr><td>savoir</td><td>knew (a fact)</td><td>found out / realized</td></tr>
+<tr><td>connaître</td><td>knew (a person)</td><td>met (for the first time)</td></tr>
+<tr><td>pouvoir</td><td>was able / could</td><td>managed to (succeeded)</td></tr>
+<tr><td>vouloir</td><td>wanted</td><td>decided to / tried</td></tr>
+<tr><td>avoir / être</td><td>had / was (state)</td><td>got / became (sudden)</td></tr>
+</table>
+
+<h2 id="pqp"><span class="num">6</span>Plus-que-parfait <span class="pill" style="background:var(--pqp)">further back</span></h2>
+<div class="formula"><span class="eq"><b>avoir</b> or <b>être</b> in the <b style="color:var(--imp)">imparfait</b> + <b>past participle</b></span><br>
+<span class="en">j'<b>avais</b> mangé (I had eaten) · j'<b>étais</b> parti(e) (I had left)</span></div>
+<p>Use it for the action that happened <b>before another past action</b> — the "past of the past."</p>
+<div class="formula" style="border-left-color:var(--pqp)"><b>3-tense timeline:</b>
+<b style="color:var(--pqp)">plus-que-parfait</b> = <i>before</i> →
+<b style="color:var(--imp)">imparfait</b> = <i>during</i> →
+<b style="color:var(--pc)">passé composé</b> = <i>after</i>
+<div class="ex"><span class="fr">Quand je suis arrivé, ils <b>avaient</b> déjà <b>mangé</b>.</span> <span class="en">— When I arrived, they had already eaten.</span></div></div>
+
+<h2 id="fut"><span class="num">7</span>Futur simple <span class="pill" style="background:var(--fut)">will</span></h2>
+<div class="formula"><span class="eq"><b>infinitive</b> + <b>-ai · -as · -a · -ons · -ez · -ont</b></span><br>
+<span class="en">parler → je parler<b>ai</b>, tu parler<b>as</b>, il parler<b>a</b>, nous parler<b>ons</b>, vous parler<b>ez</b>, ils parler<b>ont</b></span> <span class="muted">(-re verbs drop the final e: prendre → je prendrai)</span></div>
+<h3>Irregular stems (memorize these — they're reused in the conditional!)</h3>
+<table>
+<tr><td>avoir → <b>aur-</b></td><td>être → <b>ser-</b></td><td>aller → <b>ir-</b></td><td>faire → <b>fer-</b></td></tr>
+<tr><td>venir → <b>viendr-</b></td><td>voir → <b>verr-</b></td><td>pouvoir → <b>pourr-</b></td><td>vouloir → <b>voudr-</b></td></tr>
+<tr><td>devoir → <b>devr-</b></td><td>savoir → <b>saur-</b></td><td>envoyer → <b>enverr-</b></td><td>falloir → <b>faudr-</b></td></tr>
+</table>
+
+<h2 id="cond"><span class="num">8</span>Conditionnel — présent &amp; passé <span class="pill" style="background:var(--cond)">would</span></h2>
+<div class="formula"><span class="eq"><b>Présent:</b> futur stem + <b style="color:var(--imp)">imparfait</b> endings</span> (-ais, -ais, -ait, -ions, -iez, -aient)<br>
+<span class="en">je parler<b>ais</b> (I would speak) · j'aur<b>ais</b> · je ser<b>ais</b></span></div>
+<div class="formula" style="border-left-color:var(--cond)"><span class="eq"><b>Passé:</b> avoir/être <b>in the conditionnel présent</b> + past participle</span><br>
+<span class="en">j'<b>aurais</b> mangé (I would have eaten) · je <b>serais</b> parti(e) (I would have left)</span></div>
+<h3>Uses</h3>
+<ul>
+<li><b>Politeness</b> — <i>Je <b>voudrais</b> un café. <b>Pourriez</b>-vous m'aider ?</i></li>
+<li><b>Wishes / advice</b> — <i>J'<b>aimerais</b> voyager. Tu <b>devrais</b> dormir.</i></li>
+<li><b>"could have / should have"</b> (conditionnel passé): <i>j'<b>aurais pu</b> + infinitive</i> = could have; <i>j'<b>aurais dû</b> + infinitive</i> = should have.
+   <div class="ex"><span class="fr">J'aurais dû partir plus tôt.</span> <span class="en">— I should have left earlier.</span></div></li>
+<li><b>Regret / reproach</b>, and after <b>au cas où</b> (in case): <i>Prends un parapluie <b>au cas où</b> il pleuvrait.</i></li>
+</ul>
+
+<h2 id="hypo"><span class="num">9</span>The si / hypothesis system ⭐ <span class="pill" style="background:var(--accent)">the capstone</span></h2>
+<p>This ties the whole year together. A <b>si</b> ("if") sentence has two halves: the <b>si</b>-clause (the condition) and the <b>result</b>. The tense pairing is fixed — learn the three patterns and you're done.</p>
+<div class="formula cap"><b>1 · Real / future condition</b><br>
+<span class="eq">Si + <b style="color:#334155">présent</b> → <b style="color:var(--fut)">futur simple</b></span>
+<div class="ex"><span class="fr">Si j'<b>ai</b> le temps, je <b>viendrai</b>.</span> <span class="en">— If I have time, I will come.</span></div>
+<span class="muted">Related: <b>quand</b> + futur → futur — <i>Quand j'aurai fini, je t'appellerai.</i></span></div>
+<div class="formula cap"><b>2 · Unreal present / imagined now</b><br>
+<span class="eq">Si + <b style="color:var(--imp)">imparfait</b> → <b style="color:var(--cond)">conditionnel présent</b></span>
+<div class="ex"><span class="fr">Si j'<b>avais</b> le temps, je <b>viendrais</b>.</span> <span class="en">— If I had time, I would come.</span></div></div>
+<div class="formula cap"><b>3 · Unreal past / regret</b><br>
+<span class="eq">Si + <b style="color:var(--pqp)">plus-que-parfait</b> → <b style="color:var(--cond)">conditionnel passé</b></span>
+<div class="ex"><span class="fr">Si j'<b>avais eu</b> le temps, je <b>serais venu</b>.</span> <span class="en">— If I had had time, I would have come.</span></div></div>
+<div class="tip"><b>The pattern to never forget:</b> the <b>si</b>-clause is <i>never</i> in the futur or conditionnel. Push the si-clause one step into the past (présent → imparfait → plus-que-parfait) and the result rises one step of "would" (futur → conditionnel présent → conditionnel passé).</div>
+
+<h2 id="ref"><span class="num">10</span>Quick reference</h2>
+<h3>Prépositions de lieu (places)</h3>
+<table>
+<tr><th>Use</th><th>For</th><th>Example</th></tr>
+<tr><td><b>à</b></td><td>cities</td><td>à Paris, à Tokyo</td></tr>
+<tr><td><b>au</b></td><td>masculine countries</td><td>au Japon, au Canada, au Maroc</td></tr>
+<tr><td><b>en</b></td><td>feminine countries / continents</td><td>en France, en Italie, en Europe</td></tr>
+<tr><td><b>aux</b></td><td>plural countries</td><td>aux États-Unis, aux Pays-Bas</td></tr>
+</table>
+<p class="muted">(à + le = au · à + les = aux · de + le = du · de + les = des)</p>
+<h3>Special verb: manquer (to miss)</h3>
+<div class="tip">Subject and object flip vs. English: <b>Tu me manques</b> = "I miss you" (literally "you are missing to me"). <i>Ma famille me manque</i> = I miss my family.</div>
+
+<footer>
+Built from 23 lessons of screenshots (Oct 10, 2025 – Jun 12, 2026). This guide is your living reference — it gets updated automatically after each new lesson.<br>
+Companion files: <b>flashcards.html</b> (interactive practice) · <b>French_Flashcards.xlsx</b> (printable / Anki) · <b>Study/lessons/</b> (per-lesson notes).
+</footer>
+</div>
+<script>
+(function(){
+  var fab=document.getElementById('tocFab');
+  var overlay=document.getElementById('tocOverlay');
+  var drawer=document.getElementById('tocDrawer');
+  var links=document.getElementById('tocLinks');
+  // Build drawer links by cloning the top nav
+  document.querySelectorAll('nav a').forEach(function(a){
+    var c=a.cloneNode(true); links.appendChild(c);
+  });
+  function open(){overlay.classList.add('open');}
+  function close(){overlay.classList.remove('open');}
+  fab.addEventListener('click',open);
+  document.querySelector('#tocDrawer .close').addEventListener('click',close);
+  overlay.addEventListener('click',function(e){ if(e.target===overlay) close(); });
+  links.addEventListener('click',function(e){ if(e.target.tagName==='A') setTimeout(close,80); });
+  // Reading progress bar
+  var bar=document.getElementById('rprog');
+  function prog(){
+    var h=document.documentElement;
+    var max=(h.scrollHeight-h.clientHeight)||1;
+    bar.style.width=(Math.min(1,h.scrollTop/max)*100)+'%';
+  }
+  window.addEventListener('scroll',prog,{passive:true});
+  window.addEventListener('resize',prog); prog();
+})();
+</script>
+</body>
+</html>
