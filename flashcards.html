@@ -71,6 +71,10 @@
  .opt.no{border-color:var(--bad);background:rgba(248,113,113,.13);}
  .focusbtn{font-size:13px;padding:8px 13px;border:1px solid var(--line);border-radius:20px;background:#0b1224;color:var(--accent2);cursor:pointer;}
  .focusbtn:hover{border-color:var(--accent2);}
+ .cmp{font-size:14px;margin-top:6px;}
+ .cmp .you{color:var(--bad);text-decoration:line-through;}
+ .fb .dh{background:rgba(34,211,238,.22);border-radius:4px;padding:0 3px;font-weight:600;}
+ .fb.close{display:block;background:rgba(245,158,11,.13);border:1px solid #f59e0b;}
  .ansbox{min-height:44px;border:1px dashed var(--line);border-radius:12px;padding:8px;margin-top:8px;}
  .chip{display:inline-block;padding:8px 13px;margin:4px 6px 0 0;border:1px solid var(--line);border-radius:10px;background:#0b1224;color:var(--text);cursor:pointer;font-size:16px;}
  [hidden]{display:none!important;}
@@ -297,7 +301,7 @@ function exPick(n){let p=EX.slice();for(let i=p.length-1;i>0;i--){const j=Math.f
 function startSession(items){sess=items&&items.length?items:exPick(SESS_N);si=0;missed=[];exShow('exPlay');renderQ();}
 function renderQ(){
   answered=false;chosen=[];
-  const e=sess[si];
+  const e=sess[si];e._tries=0;
   document.getElementById('exBar').style.width=(100*si/sess.length)+'%';
   document.getElementById('exCount').textContent='Question '+(si+1)+' of '+sess.length;
   document.getElementById('exTopic').textContent=(e.topic||'Practice')+(e.src==='lesson'?' · from your lessons':'');
@@ -326,15 +330,45 @@ function drawBuild(){
   e._w.forEach((w,idx)=>{if(chosen.indexOf(idx)>-1)return;const c=document.createElement('span');c.className='chip';c.textContent=w;c.onclick=()=>{if(answered)return;chosen.push(idx);drawBuild();};pool.appendChild(c);});
   chosen.forEach((idx,pos)=>{const c=document.createElement('span');c.className='chip';c.textContent=e._w[idx];c.onclick=()=>{if(answered)return;chosen.splice(pos,1);drawBuild();};ans.appendChild(c);});
 }
-function checkQ(){
-  if(answered)return;const e=sess[si];let ok,given;
-  if(e.type==='build'){given=chosen.map(i=>e._w[i]).join(' ');ok=exMatch(given,e.a);}
-  else{given=document.getElementById('exInput').value;if(!given.trim())return;ok=exMatch(given,e.a);document.getElementById('exInput').disabled=true;}
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function lev(a,b){const m=a.length,n=b.length,d=Array.from({length:m+1},(_,i)=>[i].concat(new Array(n).fill(0)));for(let j=0;j<=n;j++)d[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n];}
+function closeness(given,answers){let best=99;answers.forEach(a=>{best=Math.min(best,lev(norm(given),norm(a)));});return best;}
+function isClose(given,answers){const d=closeness(given,answers);const L=norm(answers[0]).length;return d>0 && d<=(L<=6?1:2);}
+function closeHint(given,e){
+  const g=norm(given),c=norm(e.a[0]);
+  if(g.replace(/s$/,'')===c.replace(/s$/,'')) return 'Check the ending — is it -ai (futur) or -ais (conditionnel)?';
+  if(Math.abs(g.length-c.length)<=1) return 'A letter or accent is off — look again.';
+  if(g.split(' ').length!==c.split(' ').length) return 'A word is missing or extra.';
+  return 'Very close — check the form again.';
+}
+function diffHi(given,correct){
+  const g=norm(given).split(' '), cw=correct.split(' ');
+  return cw.map(w=>{const nw=norm(w);return g.indexOf(nw)===-1?'<span class="dh">'+esc(w)+'</span>':esc(w);}).join(' ');
+}
+function finalize(e,ok,given){
   answered=true;if(!ok)missed.push(e);
+  if(e.type!=='build')document.getElementById('exInput').disabled=true;
   const fb=document.getElementById('exFb');fb.className='fb '+(ok?'ok':'no');
-  fb.innerHTML=(ok?'✓ Correct! ':'✗ ')+'<span class="ans">'+e.a[0]+'</span>'+(e.explain?'<div class="why">'+e.explain+'</div>':'');
+  let html=ok?((e._tries?'✓ Nice save! ':'✓ Correct! ')+'<span class="ans">'+esc(e.a[0])+'</span>'):
+    ('✗ Not quite.<div class="cmp">You wrote: <span class="you">'+esc(given||'—')+'</span></div><div class="cmp">Correct: <span class="ans">'+diffHi(given,e.a[0])+'</span></div>');
+  if(e.explain)html+='<div class="why">'+e.explain+'</div>';
+  fb.innerHTML=html;
   document.getElementById('exCheck').hidden=true;
   const nx=document.getElementById('exNext');nx.hidden=false;nx.textContent=(si+1>=sess.length)?'See results ›':'Next ›';nx.focus();
+}
+function checkQ(){
+  if(answered)return;const e=sess[si];let given;
+  if(e.type==='build'){given=chosen.map(i=>e._w[i]).join(' ');}
+  else{given=document.getElementById('exInput').value;if(!given.trim())return;}
+  if(exMatch(given,e.a)){return finalize(e,true,given);}
+  if(e._tries===0 && isClose(given,e.a)){
+    e._tries=1;
+    const fb=document.getElementById('exFb');fb.className='fb close';
+    fb.innerHTML='🤏 So close — give it another go.<div class="why">'+closeHint(given,e)+'</div>';
+    if(e.type!=='build'){const inp=document.getElementById('exInput');inp.disabled=false;setTimeout(()=>{inp.focus();inp.select();},20);}
+    return;
+  }
+  finalize(e,false,given);
 }
 function nextQ(){si++;if(si>=sess.length)finish();else renderQ();}
 function finish(){
